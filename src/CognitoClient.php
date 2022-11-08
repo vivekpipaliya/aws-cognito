@@ -6,7 +6,6 @@ use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Exception;
 use Jose\Component\Core\AlgorithmManager;
-use Custom\Converter\StandardConverter;
 use Jose\Component\Core\JWKSet;
 use Jose\Component\Signature\Algorithm\RS256;
 use Jose\Component\Signature\JWSVerifier;
@@ -605,5 +604,38 @@ class CognitoClient
             ];
         }
         return $userAttributes;
+    }
+}
+
+final class StandardConverter implements JsonConverter
+{
+    /**
+     * @var int
+     */
+    private $options;
+
+    /**
+     * @var int
+     */
+    private $depth;
+
+    /**
+     * StandardJsonEncoder constructor.
+     * See also json_encode and json_decode parameters.
+     */
+    public function __construct(int $options = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE, int $depth = 512)
+    {
+        $this->options = $options;
+        $this->depth = $depth;
+    }
+
+    public function encode($payload): string
+    {
+        return \json_encode($payload, $this->options, $this->depth);
+    }
+
+    public function decode(string $payload, bool $associativeArray = true)
+    {
+        return \json_decode($payload, $associativeArray, $this->depth, $this->options);
     }
 }

@@ -477,7 +477,7 @@ class CognitoClient
      */
     public function decodeAccessToken($accessToken)
     {
-        $algorithmManager = AlgorithmManager([
+        $algorithmManager = new AlgorithmManager([
             new RS256(),
         ]);
 

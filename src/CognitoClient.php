@@ -607,7 +607,7 @@ class CognitoClient
     }
 }
 
-final class StandardConverter implements JsonConverter
+final class StandardConverter
 {
     /**
      * @var int

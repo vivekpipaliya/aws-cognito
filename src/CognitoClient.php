@@ -477,7 +477,7 @@ class CognitoClient
      */
     public function decodeAccessToken($accessToken)
     {
-        $algorithmManager = AlgorithmManager::create([
+        $algorithmManager = AlgorithmManager([
             new RS256(),
         ]);
 
